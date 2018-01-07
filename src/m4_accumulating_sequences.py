@@ -5,7 +5,7 @@ one item at a time, using the ACCUMULATOR pattern.
         sequences, namely by MUTATING their elements.
 
 Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
+         their colleagues and Sydney Larson.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
@@ -22,8 +22,8 @@ def main():
     #   They launch annoying rg.RoseWindows on each run that you don't want
     #   until you get to TO DO 9 and 10.
     # ------------------------------------------------------------------
-    # run_test_draw_shapes()
-    # run_test_rectangles_from_circles()
+    run_test_draw_shapes()
+    run_test_rectangles_from_circles()
 
 
 def run_test_make_simple_list():
@@ -67,6 +67,10 @@ def make_simple_list(m, n):
       :type m: int
       :type n: int
     """
+    listt = []
+    for k in range(m, n + 1, 1):
+        listt = listt + [k]
+    return listt
     # ------------------------------------------------------------------
     # TODO: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -108,6 +112,11 @@ def make_simple_string(m, n):
       :type m: int
       :type n: int
     """
+    seq = ''
+    for k in range(m, n + 1, 1):
+        seq = seq + str(k) + '-'
+
+    return seq
     # ------------------------------------------------------------------
     # TODO: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -151,6 +160,13 @@ def make_less_simple_string(m, n):
       :type m: int
       :type n: int
     """
+    seq = ''
+    for k in range(m, n + 1, 1):
+        if k < n:
+            seq = seq + str(k) + '-'
+        else:
+            seq = seq + str(k)
+    return seq
     # ------------------------------------------------------------------
     # TODO: 7. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -234,6 +250,11 @@ def draw_shapes(shapes, window):
       :type shapes:  list | tuple of rg._Shape
       :type window:  rg.RoseWindow
     """
+    shape = shapes
+    for k in range(len(shapes)):
+        shape[k].attach_to(window)
+        window.render(.3)
+    window.continue_on_mouse_click()
     # ------------------------------------------------------------------
     # TODO: 9. Implement and test this function. Make sure you do TO DO 8 in main first!
     #     The testing code is already written for you (that you just enabled in TO DO 8).
@@ -345,6 +366,15 @@ def rectangles_from_circles(circles):
       :type circles:  list | tuple of rg.Circle
       :rtype: list of rg.Rectangles
     """
+    circ = circles
+    rectangles = []
+    for k in range(len(circ)):
+        centerpoint = (circ[k].center)
+        point1 = rg.Point(centerpoint.x - circ[k].radius, centerpoint.y - circ[k].radius)
+        point2 = rg.Point(centerpoint.x + circ[k].radius, centerpoint.y + circ[k].radius)
+        rectangle = rg.Rectangle(point1, point2)
+        rectangles = rectangles +[rectangle]
+    return rectangles
     # ------------------------------------------------------------------
     # TODO: 10. Implement and test this function.
     #     The testing code is already written for you (above).
