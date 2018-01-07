@@ -6,7 +6,7 @@ This module lets you practice:
   -- CALLING functions
 
 Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
+         their colleagues and Sydney Larson.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
@@ -67,7 +67,17 @@ def run_test_generate_points_on_circle():
     # ------------------------------------------------------------------
     # Test 2:  (YOU write THIS test)
     # ------------------------------------------------------------------
+    expected = [rg.Point(158.0, 200.0),  # All numbers are approximate.
+                rg.Point(154.0, 206.9),
+                rg.Point(246.0, 206.9),
+                rg.Point(142.0, 200.0),
+                rg.Point(146.0, 193.1),
+                rg.Point(154.0, 193.1)]
+    circle = rg.Circle(rg.Point(150, 200), 8)
+    answer = generate_points_on_circle(circle, 6)
 
+    print('Expected:', expected)
+    print('Actual:  ', answer)
 
 def generate_points_on_circle(circle_for_points, number_of_points_to_generate):
     """
@@ -212,6 +222,16 @@ def draw_points_on_circle(window, circle, number_of_points, color):
       :type number_of_points: int
       :type color:            str
     """
+    circle.attach_to(window)
+    points = generate_points_on_circle(circle, number_of_points)
+    for k in range(number_of_points):
+        circle1 = rg.Circle(points[k], 10)
+
+        circle1.fill_color = color
+        circle1.attach_to(window)
+        points[k].attach_to(window)
+
+        window.render(.15)
     # ------------------------------------------------------------------
     # TODO: 4. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -300,6 +320,15 @@ def pizza(window, circle, number_of_slices, color, thickness):
       :type color:            str
       :type thickness:        int
     """
+    circle.attach_to(window)
+    window.render(.15)
+    points = generate_points_on_circle(circle,number_of_slices)
+    for k in range(number_of_slices):
+        line = rg.Line(circle.center,points[k])
+        line.color = color
+        line.thickness = thickness
+        line.attach_to(window)
+        window.render(.15)
     # ------------------------------------------------------------------
     # TODO: 6. Implement and test this function.
     #   Note that you should write its TEST function first (above).
@@ -377,7 +406,24 @@ def polygon(window, circle, number_of_segments, color, thickness):
       :type color:              str
       :type thickness:          int
     """
-    # ------------------------------------------------------------------
+    circle.attach_to(window)
+    window.render(.15)
+    points = generate_points_on_circle(circle, number_of_segments)
+
+    for k in range(number_of_segments):
+        if k < number_of_segments - 1:
+            point = points[k]
+            point2 = points[k + 1]
+        else:
+            point = points[k]
+            point2 = points[0]
+
+        line = rg.Line(point, point2)
+        line.color = color
+        line.thickness = thickness
+        line.attach_to(window)
+        window.render(.15)
+        # ------------------------------------------------------------------
     # TODO: 8. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     #
@@ -495,6 +541,17 @@ def fancy_polygon(window, circle, number_of_lines, hops_to_next_point, color, th
       :type color:           str
       :type thickness:       int
     """
+    circle.attach_to(window)
+    window.render()
+    points = generate_points_on_circle(circle, number_of_lines)
+    for k in range(number_of_lines):
+        p1 = points[k]
+        p2 = points[(k + hops_to_next_point) % len(points)]
+        line = rg.Line(p1, p2)
+        line.color = color
+        line.thickness = thickness
+        line.attach_to(window)
+        window.render(.15)
     # ------------------------------------------------------------------
     # TODO: 10. Implement and test this function.
     #   Note that you should write its TEST function first (above).
